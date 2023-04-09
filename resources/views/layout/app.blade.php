@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>dpuProject - @yield('title')</title>
 </head>
 <body>
 
@@ -17,9 +17,9 @@
         <td width="864"> @yield('content') </td>
         <td>
             <ul>
-                <li><a href="members/register">Kayit ol</a></li>
-                <li><a href="members/login">Uye giris </a></li>
-                <li><a href="members/forgetPassword"> sifre unuttum</a></li>
+                <li><a href="{{('register')}}">Kayit ol</a></li>
+                <li><a href="{{'login'}}">Uye giris </a></li>
+                <li><a href="{{('forgetPassword')}}"> sifre unuttum</a></li>
             </ul>
         </td>
     </tr>
