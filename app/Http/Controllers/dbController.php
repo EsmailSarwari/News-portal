@@ -44,7 +44,25 @@ class dbController extends Controller
         return response()->redirectTo('db/select');
     }
 
+    public function edit(int $id)
+    {
+        $editNews = DB::select('SELECT * FROM news WHERE id = :id', ['id' => $id]);
+        return view('database.edit', [
+            'editNews' => $editNews[0]
+        ]);
+    }
 
+    public function update(request $request, int $id)
+    {
+        DB::update('UPDATE news SET  title = :title, summary = :summary, content = :content, updated_at = :updated_at WHERE id = :id ', [
+            'title' => $request->get('title'),
+            'summary' => $request->get('summary'),
+            'content' => $request->get('content'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'id' => $id
+        ]);
+        return response()->redirectTo('db/details/'. $id);
+    }
 
 
 }

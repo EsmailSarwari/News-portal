@@ -31,6 +31,8 @@ Route::prefix('db')->group(function (){
     Route::post('insert', [Controllers\dbController::class, 'insert']);
     Route::get('add', [Controllers\dbController::class, 'add']);
     Route::get('delete/{id}', [Controllers\dbController::class, 'delete']);
+    Route::get('edit/{id}', [Controllers\dbController::class, 'edit']);
+    Route::post('edit/{id}', [Controllers\dbController::class, 'update']);
 
 });
 
