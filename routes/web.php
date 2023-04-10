@@ -40,6 +40,9 @@ Route::prefix('cache')->group(function (){
     Route::get('/', [Controllers\cacheController::class, 'sample']);
 });
 
+Route::prefix('mail')->group(function(){
+    Route::get('/shipment', [Controllers\mailController::class, 'send']);
+});
 
 
 
