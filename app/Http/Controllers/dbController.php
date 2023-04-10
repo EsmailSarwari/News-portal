@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class dbController extends Controller
 {
@@ -15,8 +16,12 @@ class dbController extends Controller
             'news' => $news
         ]);
     }
-    public function details(int $id)
+    public function details(request $request, $id)
     {
+        Log::info('harber goruntulendi',[
+            'id' => $id,
+            'clientIp' => $request->getClientIp()
+        ]);
         $newsDetails = DB::select('SELECT * FROM news WHERE id = :id', ['id' => $id]);
         return  view('database.details', [
             'newsDetails' => $newsDetails[0]
@@ -54,6 +59,7 @@ class dbController extends Controller
 
     public function update(request $request, int $id)
     {
+        Log::info($id. "ID numarili guncellendi");
         DB::update('UPDATE news SET  title = :title, summary = :summary, content = :content, updated_at = :updated_at WHERE id = :id ', [
             'title' => $request->get('title'),
             'summary' => $request->get('summary'),
@@ -63,8 +69,6 @@ class dbController extends Controller
         ]);
         return response()->redirectTo('db/details/'. $id);
     }
-
-
 }
 
 

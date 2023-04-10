@@ -36,6 +36,9 @@ Route::prefix('db')->group(function (){
 
 });
 
+Route::prefix('cache')->group(function (){
+    Route::get('/', [Controllers\cacheController::class, 'sample']);
+});
 
 
 
