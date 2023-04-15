@@ -22,8 +22,8 @@
             </div>
             <div class="col-6">
                 <ul >
-                    <li ><a href="/db/select" style="text-decoration: none;">haberleri listele</a></li>
-                    <li><a href="/db/add" style="text-decoration: none;">haber ekle</a></li>
+                    <li ><a href="/db/select" style="text-decoration: none;">dersleri listele</a></li>
+                    <li><a href="/db/add" style="text-decoration: none;">ders ekle</a></li>
                 </ul>
             </div>
         </div>

@@ -5,8 +5,8 @@
 <h6>{{ $newsDetails->summary}}</h6>
 <p>{{$newsDetails->content}}</p>
 
-<a href="/db/delete/{{$newsDetails->id}}" class="btn btn-outline-danger"> haberi sil</a>
-<a href="/db/edit/{{ $newsDetails->id }}" class="btn btn-outline-secondary" >Haberi guncelle</a>
+<a href="/db/delete/{{$newsDetails->id}}" class="btn btn-outline-danger"> dersi sil</a>
+<a href="/db/edit/{{ $newsDetails->id }}" class="btn btn-outline-secondary" >dersi guncelle</a>
 @endsection('content')
 
 

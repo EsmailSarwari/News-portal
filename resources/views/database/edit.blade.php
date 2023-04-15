@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h6>Haber Guncelleme</h6>
+                <h6>dersi Guncelleme</h6>
                 <form method="POST" class="form-group">
                     @csrf
                     <input class="input form-control" type="text" name="title" value="{{ $editNews->title }}"> <br>

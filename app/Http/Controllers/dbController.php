@@ -6,12 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class dbController extends Controller
 {
     public function select()
     {
-        $news = DB::select('SELECT * FROM news' );
+        $news = DB::select('SELECT * FROM news ORDER BY id DESC ' );
         return view('database.select', [
             'news' => $news
         ]);
@@ -29,6 +30,17 @@ class dbController extends Controller
     }
     public function insert(request $request)
     {
+        $validator = validator::make($request->all(), [
+            'title' => 'required|min:5|max:255|unique:news,title',
+            'summary' => 'required',
+            'content' => 'required'
+        ]);
+
+        if ($validator->fails()){
+            return redirect('/db/add')->withInput()->withErrors($validator);
+
+        };
+
         DB::insert('INSERT INTO news(title, summary, content, created_at, updated_at) VALUES(?,?,?,?,?)',[
             $request->post('title'),
             $request->post('summary'),
@@ -37,7 +49,6 @@ class dbController extends Controller
             Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         return response()->redirectTo('db/add');
-
     }
     public function add()
     {
@@ -70,10 +81,6 @@ class dbController extends Controller
         return response()->redirectTo('db/details/'. $id);
     }
 }
-
-
-
-
 
 
 
