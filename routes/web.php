@@ -33,7 +33,6 @@ Route::prefix('db')->group(function (){
     Route::get('delete/{id}', [Controllers\dbController::class, 'delete']);
     Route::get('edit/{id}', [Controllers\dbController::class, 'edit']);
     Route::post('edit/{id}', [Controllers\dbController::class, 'update']);
-
 });
 
 Route::prefix('cache')->group(function (){
