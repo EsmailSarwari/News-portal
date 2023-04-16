@@ -33,15 +33,16 @@ class dbController extends Controller
         $validator = validator::make($request->all(), [
             'title' => 'required|min:5|max:255|unique:news,title',
             'summary' => 'required',
-            'content' => 'required'
+            'content' => 'required',
+            'category_id' => 'numeric|exists:categories,id'
         ]);
 
         if ($validator->fails()){
             return redirect('/db/add')->withInput()->withErrors($validator);
-
         };
 
-        DB::insert('INSERT INTO news(title, summary, content, created_at, updated_at) VALUES(?,?,?,?,?)',[
+        DB::insert('INSERT INTO news(category_id, title, summary, content, created_at, updated_at) VALUES(?,?,?,?,?,?)',[
+            $request->post('category_id'),
             $request->post('title'),
             $request->post('summary'),
             $request->post('content'),
@@ -52,7 +53,10 @@ class dbController extends Controller
     }
     public function add()
     {
-        return view('database.add');
+        $categories = DB::select('SELECT * FROM categories');
+        return view('database.add', [
+            'categories' => $categories
+        ]);
     }
     public function delete(int $id)
     {
