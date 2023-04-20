@@ -1,7 +1,8 @@
 @extends('layout.newsPortal')
 
 @section('content')
-    <h3>{{$newsDetails->title}}</h3>
+
+    <h3>{{$newsDetails->title}} <sapn class="badge bg-info" >{{ $newsDetails->Category->name }}</sapn></h3>
     <h6>{{ $newsDetails->summary}}</h6>
     <p>{{$newsDetails->content}}</p>
 

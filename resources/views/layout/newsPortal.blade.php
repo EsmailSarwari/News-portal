@@ -21,10 +21,20 @@
                 @yield('content')
             </div>
             <div class="col-6">
-                <ul >
-                    <li ><a href="/db/select" style="text-decoration: none;">haberleri listele</a></li>
-                    <li><a href="/db/add" style="text-decoration: none;">haber ekle</a></li>
-                </ul>
+                <div class="list-group">
+                    <a class="list-group-item" href="/db/select" style="text-decoration: none;">haberleri listele</a>
+
+                        @foreach(App\Models\Category::orderBy('order')->get() as $category)
+                            <a class="list-group-item" @if(isset($category_id) && $category->id == $category_id) active @endif
+                               href="/db/category/{{ $category->id }}"
+                               style=" text-decoration: none; border: none"
+                            >
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
+
+                   <a class="list-group-item" href="/db/add" style="text-decoration: none;">haber ekle</a>
+                </div>
             </div>
         </div>
         <div class="row">

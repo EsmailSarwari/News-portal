@@ -27,6 +27,7 @@ Route::prefix('members')->group(function (){
 
 Route::prefix('db')->group(function (){
     Route::get('select', [Controllers\dbController::class, 'select']);
+    Route::get('category/{id}', [Controllers\dbController::class, 'category']);
     Route::get('details/{id}',[Controllers\dbController::class, 'details']);
     Route::post('insert', [Controllers\dbController::class, 'insert']);
     Route::get('add', [Controllers\dbController::class, 'add']);

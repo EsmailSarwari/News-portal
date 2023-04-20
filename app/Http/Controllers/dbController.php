@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\News;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,21 +14,36 @@ class dbController extends Controller
 {
     public function select()
     {
-        $news = DB::select('SELECT * FROM news ORDER BY id DESC ' );
+        $news = News::orderBy('id', 'DESC')->get();
+
         return view('database.select', [
             'news' => $news
         ]);
     }
+
+    public function category(request $request, int $id)
+    {
+        $news = Category::findOrFail($id)->news()->orderBy('id', 'DESC')->get();
+
+        return view('database.select', [
+            'news' => $news,
+            'category_id' => $id
+        ]);
+    }
+
     public function details(request $request, $id)
     {
         Log::info('harber goruntulendi',[
             'id' => $id,
             'clientIp' => $request->getClientIp()
         ]);
-        $newsDetails = DB::select('SELECT * FROM news WHERE id = :id', ['id' => $id]);
+
+        $newsDetails = News::findOrFail($id);
+
         return  view('database.details', [
-            'newsDetails' => $newsDetails[0]
+            'newsDetails' => $newsDetails
     ]);
+
     }
     public function insert(request $request)
     {
@@ -41,47 +58,53 @@ class dbController extends Controller
             return redirect('/db/add')->withInput()->withErrors($validator);
         };
 
-        DB::insert('INSERT INTO news(category_id, title, summary, content, created_at, updated_at) VALUES(?,?,?,?,?,?)',[
-            $request->post('category_id'),
-            $request->post('title'),
-            $request->post('summary'),
-            $request->post('content'),
-            Carbon::now()->format('Y-m-d H:i:s'),
-            Carbon::now()->format('Y-m-d H:i:s'),
-        ]);
+        $news = new News();
+        $news->category_id = $request->post('category_id');
+        $news->title = $request->post('title');
+        $news->summary = $request->post('summary');
+        $news->content = $request->post('content');
+        $news->save();
+
         return response()->redirectTo('db/add');
     }
     public function add()
     {
-        $categories = DB::select('SELECT * FROM categories');
+        $categories = Category::orderBy('order')->get();
+
         return view('database.add', [
             'categories' => $categories
         ]);
     }
     public function delete(int $id)
     {
-        DB::delete('DELETE FROM news WHERE id= :id', ['id' => $id]);
+        $news = News::findOrFail($id);
+        $news->delete();
+
         return response()->redirectTo('db/select');
     }
 
     public function edit(int $id)
     {
-        $editNews = DB::select('SELECT * FROM news WHERE id = :id', ['id' => $id]);
+        $editNews = News::findOrFail($id);
+        $categories = Category::orderBy('order')->get();
+
         return view('database.edit', [
-            'editNews' => $editNews[0]
+            'editNews' => $editNews,
+            'categories' => $categories
         ]);
     }
 
     public function update(request $request, int $id)
     {
         Log::info($id. "ID numarili guncellendi");
-        DB::update('UPDATE news SET  title = :title, summary = :summary, content = :content, updated_at = :updated_at WHERE id = :id ', [
-            'title' => $request->get('title'),
-            'summary' => $request->get('summary'),
-            'content' => $request->get('content'),
-            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-            'id' => $id
-        ]);
+
+        $news = News::findOrFail($id);
+        $news->category_id = $request->post('category_id');
+        $news->title = $request->post('title');
+        $news->summary = $request->post('summary');
+        $news->content  = $request->post('content');
+        $news->save();
+
         return response()->redirectTo('db/details/'. $id);
     }
 }
