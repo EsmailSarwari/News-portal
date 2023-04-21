@@ -7,6 +7,7 @@
         <a href="/db/details/{{ $newsItem->id }}" class="btn btn-outline-warning">details</a>
         <hr/>
     @endforeach
+    {{ $news->Links() }}
 @endsection('content')
 
 

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\News;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,7 +12,7 @@ class dbController extends Controller
 {
     public function select()
     {
-        $news = News::orderBy('id', 'DESC')->get();
+        $news = News::orderBy('id', 'DESC')->paginate(10);
 
         return view('database.select', [
             'news' => $news
@@ -23,7 +21,7 @@ class dbController extends Controller
 
     public function category(request $request, int $id)
     {
-        $news = Category::findOrFail($id)->news()->orderBy('id', 'DESC')->get();
+        $news = Category::findOrFail($id)->news()->orderBy('id', 'DESC')->paginate(2);
 
         return view('database.select', [
             'news' => $news,
@@ -97,6 +95,13 @@ class dbController extends Controller
     public function update(request $request, int $id)
     {
         Log::info($id. "ID numarili guncellendi");
+
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|numeric',
+            'title' => 'required|min:5|max:25|unique:news,title' . $id,
+            'summary' => 'required',
+            'content' => 'required'
+            ]);
 
         $news = News::findOrFail($id);
         $news->category_id = $request->post('category_id');
