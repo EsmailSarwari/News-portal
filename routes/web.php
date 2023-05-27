@@ -42,11 +42,14 @@ Route::prefix('db')->group(function (){
     Route::get('select', [Controllers\dbController::class, 'select']);
     Route::get('category/{id}', [Controllers\dbController::class, 'category']);
     Route::get('details/{id}',[Controllers\dbController::class, 'details']);
-    Route::post('insert', [Controllers\dbController::class, 'insert']);
-    Route::get('add', [Controllers\dbController::class, 'add']);
-    Route::get('delete/{id}', [Controllers\dbController::class, 'delete']);
-    Route::get('edit/{id}', [Controllers\dbController::class, 'edit']);
-    Route::post('edit/{id}', [Controllers\dbController::class, 'update']);
+
+    Route::middleware('auth')->group(function () {
+        Route::post('insert', [Controllers\dbController::class, 'insert']);
+        Route::get('add', [Controllers\dbController::class, 'add']);
+        Route::get('delete/{id}', [Controllers\dbController::class, 'delete']);
+        Route::get('edit/{id}', [Controllers\dbController::class, 'edit']);
+        Route::post('edit/{id}', [Controllers\dbController::class, 'update']);
+    });
 });
 
 Route::prefix('cache')->group(function (){
