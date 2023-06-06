@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,17 +31,17 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('members')->group(function (){
-    Route::get('register', [Controllers\membersController::class, 'register'] );
+Route::prefix('members')->group(function () {
+    Route::get('register', [Controllers\membersController::class, 'register']);
     Route::get('login', [Controllers\membersController::class, 'login']);
     Route::get('forgetPassword', [Controllers\membersController::class, 'forgetPassword']);
     Route::post('loggedIn', [Controllers\membersController::class, 'loggedIn']);
 });
 
-Route::prefix('db')->group(function (){
+Route::prefix('db')->group(function () {
     Route::get('select', [Controllers\dbController::class, 'select']);
     Route::get('category/{id}', [Controllers\dbController::class, 'category']);
-    Route::get('details/{id}',[Controllers\dbController::class, 'details']);
+    Route::get('details/{id}', [Controllers\dbController::class, 'details']);
 
     Route::middleware('auth')->group(function () {
         Route::post('insert', [Controllers\dbController::class, 'insert']);
@@ -52,12 +52,10 @@ Route::prefix('db')->group(function (){
     });
 });
 
-Route::prefix('cache')->group(function (){
+Route::prefix('cache')->group(function () {
     Route::get('/', [Controllers\cacheController::class, 'sample']);
 });
 
-Route::prefix('mail')->group(function(){
+Route::prefix('mail')->group(function () {
     Route::get('/shipment', [Controllers\mailController::class, 'send']);
 });
-
-

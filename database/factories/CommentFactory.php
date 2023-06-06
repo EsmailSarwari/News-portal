@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Category;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,7 +21,7 @@ class CommentFactory extends Factory
         return [
             'user_id' => User::all()->random(),
             'news_id' => News::all()->random(),
-            'comment' => fake()->paragraph
+            'comment' => fake()->paragraph,
         ];
     }
 }

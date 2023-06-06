@@ -3,10 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\News;
-use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class NewsSeeder extends Seeder
 {
@@ -18,4 +15,3 @@ class NewsSeeder extends Seeder
         News::factory()->count(10)->create();
     }
 }
-

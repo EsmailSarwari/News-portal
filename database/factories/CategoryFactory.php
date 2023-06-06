@@ -18,7 +18,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => fake()->name,
-            'order' => fake()->randomNumber()
+            'order' => fake()->randomNumber(),
         ];
     }
 }

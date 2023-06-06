@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\orderShipped;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class mailController extends Controller
@@ -12,10 +11,6 @@ class mailController extends Controller
     {
         Mail::to('esmail.sarwari@ogr.dpu.edu.tr', 'esmail sarwari')
             ->send(new orderShipped('esmail', 'sarwari', rand(10, 99999)));
-        echo "<strong>\"order shipped \"</strong> email has been sent";
+        echo '<strong>"order shipped "</strong> email has been sent';
     }
 }
-
-
-
-
